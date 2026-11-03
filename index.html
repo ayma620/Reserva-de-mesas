@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maison Rouge · Reservas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="awning" aria-hidden="true"></div>
+    <div class="container">
+        <header>
+            <svg class="eiffel" viewBox="0 0 80 120" aria-hidden="true">
+                <path d="M8 118 L31 58 L40 6 L49 58 L72 118"/>
+                <path d="M22 118 Q40 78 58 118"/>
+                <path d="M31 58 H49 M24 88 H56 M35 34 H45 M40 6 V0"/>
+                <path d="M31 58 L56 88 M49 58 L24 88 M35 34 L49 58 M45 34 L31 58"/>
+            </svg>
+            <h1>Maison Rouge</h1>
+            <p class="lead">Brasserie parisina · Reserve su mesa</p>
+            <div class="ornament" aria-hidden="true"></div>
+        </header>
+
+        <section class="stats" id="stats" aria-label="Resumen"></section>
+
+        <main class="main">
+            <section class="panel" id="formPanel">
+                <h2>Nueva reserva</h2>
+                <form id="formReservation">
+                    <label>Nombre
+                        <input id="name" type="text" placeholder="Ej: Juan Pérez" required autocomplete="off">
+                    </label>
+                    <label>Contacto (tel o e-mail)
+                        <input id="contact" type="text" placeholder="Ej: 3001234567" required autocomplete="off">
+                    </label>
+                    <div class="row">
+                        <label>Comensales
+                            <input id="guests" type="number" min="1" max="10" value="2" required>
+                        </label>
+                        <label>Mesa
+                            <input id="table" type="number" min="1" max="12" value="1" required>
+                        </label>
+                    </div>
+                    <label>Fecha y hora
+                        <input id="datetime" type="datetime-local" required>
+                    </label>
+                    <p class="hint">Cada reserva ocupa la mesa durante 2 horas.</p>
+                    <div class="actions">
+                        <button type="submit" class="btn">Guardar reserva</button>
+                        <button id="clearBtn" type="button" class="btn outline">Limpiar</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="panel">
+                <h2>Mesas</h2>
+                <div id="tables" class="tables"></div>
+            </section>
+
+            <section class="panel wide">
+                <h2>Reporte de reservas</h2>
+                <div class="report-controls">
+                    <label>Desde <input id="fromDate" type="date"></label>
+                    <label>Hasta <input id="toDate" type="date"></label>
+                    <label>Estado
+                        <select id="statusFilter">
+                            <option value="">Todas</option>
+                            <option value="reservada">Activas</option>
+                            <option value="cancelada">Canceladas</option>
+                        </select>
+                    </label>
+                    <label>Buscar <input id="search" type="text" placeholder="Nombre o contacto"></label>
+                </div>
+                <div class="actions">
+                    <button id="btnShowReport" class="btn">Mostrar reporte</button>
+                    <button id="btnResetFilters" class="btn outline">Quitar filtros</button>
+                    <button id="btnPreviewCsv" class="btn outline">Previsualizar CSV</button>
+                    <button id="btnExportCsv" class="btn gold">Exportar CSV</button>
+                </div>
+
+                <div id="reportArea" class="reportArea"></div>
+
+                <div id="csvPreview" class="csvPreview hidden">
+                    <div class="csv-grid">
+                        <div class="csv-list">
+                            <h3>Reservas (vista rápida)</h3>
+                            <div id="csvList"></div>
+                        </div>
+                        <div class="csv-text">
+                            <h3>CSV Preview</h3>
+                            <pre id="csvText"></pre>
+                            <div class="actions">
+                                <button id="btnDownloadFromPreview" class="btn gold">Descargar CSV</button>
+                                <button id="btnClosePreview" class="btn outline">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer><small>⚜ Proyecto educativo ⚜</small></footer>
+    </div>
+
+    <dialog id="quickDialog">
+        <h2 id="quickTitle">Reserva rápida</h2>
+        <form id="quickForm">
+            <input type="hidden" id="qTable">
+            <label>Nombre <input id="qName" type="text" required autocomplete="off"></label>
+            <label>Contacto <input id="qContact" type="text" required autocomplete="off"></label>
+            <div class="row">
+                <label>Comensales <input id="qGuests" type="number" min="1" max="10" value="2" required></label>
+                <label>Fecha y hora <input id="qDatetime" type="datetime-local" required></label>
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn">Reservar</button>
+                <button type="button" id="qCancel" class="btn outline">Volver</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog id="confirmDialog">
+        <p id="confirmText"></p>
+        <div class="actions">
+            <button id="confirmYes" class="btn">Confirmar</button>
+            <button id="confirmNo" class="btn outline">Volver</button>
+        </div>
+    </dialog>
+
+    <div id="toasts" aria-live="polite"></div>
+    <script src="script.js"></script>
+</body>
+</html>
